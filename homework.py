@@ -46,9 +46,11 @@ def send_message(bot, message):
 
 
 def get_api_answer(timestamp):
-    """Делает запрос к единственному эндпоинту API-сервиса.
+    """
+    Делает запрос к единственному эндпоинту API-сервиса.
     В случае успешного запроса должна вернуть ответ API,
-    приведя его из формата JSON к типам данных Python."""
+    приведя его из формата JSON к типам данных Python.
+    """
     payload = {'from_date': timestamp}
     try:
         response = requests.get(ENDPOINT, headers=HEADERS, params=payload)

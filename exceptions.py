@@ -1,3 +1,4 @@
-class RequestException(Exception):
+class CustomExceptionError(Exception):
     """Ошибка статуса."""
+
     pass

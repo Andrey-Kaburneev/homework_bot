@@ -8,7 +8,7 @@ import telegram
 from dotenv import load_dotenv
 from http import HTTPStatus
 
-from exceptions import RequestException
+from exceptions import CustomExceptionError
 
 load_dotenv()
 
@@ -17,7 +17,7 @@ PRACTICUM_TOKEN = os.getenv('PRACTICUM_TOKEN')
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 
-RETRY_PERIOD = 600
+RETRY_PERIOD = 10 * 60
 ENDPOINT = 'https://practicum.yandex.ru/api/user_api/homework_statuses/'
 HEADERS = {'Authorization': f'OAuth {PRACTICUM_TOKEN}'}
 
@@ -55,10 +55,10 @@ def get_api_answer(timestamp):
     try:
         response = requests.get(ENDPOINT, headers=HEADERS, params=payload)
         if response.status_code != HTTPStatus.OK:
-            raise RequestException(f'Статус код: {response.status_code}')
+            raise CustomExceptionError(f'Статус код: {response.status_code}')
         return response.json()
     except requests.RequestException as error:
-        raise RequestException(f'Ошибка: {error}')
+        raise CustomExceptionError(f'Ошибка: {error}')
 
 
 def check_response(response):
